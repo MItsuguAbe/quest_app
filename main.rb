@@ -7,11 +7,18 @@ class Brave
       @offense = params[:offense]
       @defense = params[:defense]
     end
+
+    def attack(monster)
+        puts "#{@name}の攻撃"
+    
+        damage = @offense - monster.defense
+    
+        # 自己代入：monster.hpからdamageを引いた値をmonster.hpに代入
+        monster.hp -= damage
+    
+        puts "#{monster.name}は#{damage}のダメージを受けた"
+        puts "#{monster.name}の残りHPは#{monster.hp}だ"
+    end
   
 end
   
-brave = Brave.new(name: "テリー", hp: 500, offense: 150, defense: 100)
-  
-brave.hp -= 30
-  
-puts "#{brave.name}はダメージを受けた!　残りHPは#{brave.hp}だ"
