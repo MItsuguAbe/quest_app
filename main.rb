@@ -1,5 +1,7 @@
 class Brave
     attr_accessor :name, :hp, :offense, :defense
+
+    SPECIAL_ATTACK_CONSTANT = 1.5
   
     def initialize(**params)
       @name = params[:name]
@@ -10,6 +12,16 @@ class Brave
 
     def attack(monster)
         puts "#{@name}の攻撃"
+    
+        attack_num = rand(4)
+  
+        if attack_num == 0
+            puts "必殺攻撃"
+            damage = calculate_special_attack - monster.defense
+        else
+            puts "通常攻撃"
+            damage = @offense - monster.defense
+        end
     
         damage = @offense - monster.defense
     
