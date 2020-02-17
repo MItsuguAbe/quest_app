@@ -31,6 +31,11 @@ class Brave
         puts "#{monster.name}は#{damage}のダメージを受けた"
         puts "#{monster.name}の残りHPは#{monster.hp}だ"
     end
+
+
+    def calculate_special_attack
+        @offense * SPECIAL_ATTACK_CONSTANT
+    end
   
 end
   
