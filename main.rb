@@ -80,33 +80,44 @@ class Monster
       @offense = params[:offense]
       @defense = params[:defense]
 
-      # モンスターが変身したかどうかを判定するフラグ
       @transform_flag = false
-
-      # 変身する際の閾値（トリガー）を計算
       @trigger_of_transform = params[:hp] * CALC_HALF_HP
     end
 
     def attack(brave)
         if @hp <= @trigger_of_transform && @transform_flag == false
-            # モンスター変身判定フラグにtrueを代入
             @transform_flag = true
-            # 変身メソッドを実行
             transform
         end
 
         puts "#{@name}の攻撃"
     
-        damage = @offense - brave.defense
+        damage = calculate_damage(brave)
 
-        brave.hp -= damage
-    
-        puts "#{brave.name}は#{damage}のダメージを受けた"
+        # ダメージ反映処理の呼び出し
+        cause_damage(target: brave, damage: damage)
+
         puts "#{brave.name}の残りHPは#{brave.hp}だ"
     end
 
     
     private
+
+      # ダメージ計算処理
+      def calculate_damage(target)
+        @offense - target.defense
+      end
+
+      # ダメージ反映処理
+      def cause_damage(**params)
+        # 引数で受け取った値を変数に格納
+        damage = params[:damage]
+        target = params[:target]
+  
+        target.hp -= damage
+        puts "#{target.name}は#{damage}のダメージを受けた"
+      end
+  
 
       def transform
         transform_name = "ドラゴン"
@@ -116,9 +127,8 @@ class Monster
         #{@name}は#{transform_name}に変身した
         EOS
 
-        # モンスターの攻撃力を1.5倍にする
+        
         @offense *= POWER_UP_RATE
-        # モンスターの名前を変更
         @name = transform_name
       end
   
@@ -130,5 +140,8 @@ end
 brave = Brave.new(name: "テリー", hp: 500, offense: 150, defense: 100)
 monster = Monster.new(name: "スライム", hp: 250, offense: 200, defense: 100)
 
-brave.attack(monster)
-monster.attack(brave)
+# ループ処理
+loop do
+    brave.attack(monster)
+    monster.attack(brave)
+end
