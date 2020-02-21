@@ -11,31 +11,58 @@ class Brave
     end
 
     def attack(monster)
-        puts "#{@name}の攻撃"
+      puts "#{@name}の攻撃"
     
+       # decision_attack_typeメソッドの呼び出し
+      attack_type = decision_attack_type
+
+       # calculate_damageメソッドの呼び出し
+      damage = calculate_damage(target: monster, attack_type: attack_type)
+
+      # ダメージをHPに反映させるcause_damageメソッドの呼び出し
+      cause_damage(target: monster, damage: damage)
+    
+      puts "#{@name}の残りHPは#{monster.hp}だ"
+    end
+    
+    
+    private
+    
+      def decision_attack_type
         attack_num = rand(4)
-  
+        
         if attack_num == 0
             puts "必殺攻撃"
-            damage = calculate_special_attack - monster.defense
+            "special_attack"
         else
             puts "通常攻撃"
-            damage = @offense - monster.defense
+            "normal_attack"
         end
+      end
     
-        damage = @offense - monster.defense
+       # 変数に格納することによって将来ハッシュのキーに変更があった場合でも変更箇所が少なくて済む
+      def calculate_damage(**params)
+        target = params[:target]
+        attack_type = params[:attack_type]
     
-        # 自己代入：monster.hpからdamageを引いた値をmonster.hpに代入
-        monster.hp -= damage
+        if attack_type == "special_attack"
+            calculate_special_attack - target.defense
+        else
+            @offense - target.defense
+        end
+      end
     
-        puts "#{monster.name}は#{damage}のダメージを受けた"
-        puts "#{monster.name}の残りHPは#{monster.hp}だ"
-    end
-
-
-    def calculate_special_attack
+      def cause_damage(**params)
+        damage = params[:damage]
+        target = params[:target]
+    
+        target.hp -= damage
+        puts "#{target.name}は#{damage}のダメージを受けた"
+      end
+    
+      def calculate_special_attack
         @offense * SPECIAL_ATTACK_CONSTANT
-    end
+      end
   
 end
   
@@ -82,7 +109,7 @@ class Monster
     private
 
       def transform
-       transform_name = "ドラゴン"
+        transform_name = "ドラゴン"
 
         puts <<~EOS
         #{@name}は怒っている
@@ -96,3 +123,12 @@ class Monster
       end
   
 end
+
+
+
+
+brave = Brave.new(name: "テリー", hp: 500, offense: 150, defense: 100)
+monster = Monster.new(name: "スライム", hp: 250, offense: 200, defense: 100)
+
+brave.attack(monster)
+monster.attack(brave)
