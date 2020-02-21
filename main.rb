@@ -1,14 +1,17 @@
-class Brave
-    attr_accessor :name, :hp, :offense, :defense
+class Character
+  attr_accessor :name, :hp, :offense, :defense
 
+  def initialize(**params)
+    @name = params[:name]
+    @hp = params[:hp]
+    @offense = params[:offense]
+    @defense = params[:defense]
+  end
+end
+
+
+class Brave < Character
     SPECIAL_ATTACK_CONSTANT = 1.5
-  
-    def initialize(**params)
-      @name = params[:name]
-      @hp = params[:hp]
-      @offense = params[:offense]
-      @defense = params[:defense]
-    end
 
     def attack(monster)
       puts "#{@name}の攻撃"
@@ -72,18 +75,21 @@ end
   
 
 
-class Monster
-    attr_accessor :name, :hp, :offense, :defense
+class Monster < Character
 
     POWER_UP_RATE = 1.5
     CALC_HALF_HP = 0.5
   
     def initialize(**params)
-      @name = params[:name]
-      @hp = params[:hp]
-      @offense = params[:offense]
-      @defense = params[:defense]
-
+      
+      super(
+        name: params[:name],
+        hp: params[:hp],
+        offense: params[:offense],
+        defense: params[:defense]
+      )
+  
+      # 親クラスで定義していない処理はそのまま残す
       @transform_flag = false
       @trigger_of_transform = params[:hp] * CALC_HALF_HP
     end
