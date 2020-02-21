@@ -22,7 +22,7 @@ class Brave
       # ダメージをHPに反映させるcause_damageメソッドの呼び出し
       cause_damage(target: monster, damage: damage)
     
-      puts "#{@name}の残りHPは#{monster.hp}だ"
+      puts "#{monster.name}の残りHPは#{monster.hp}だ"
     end
     
     
@@ -57,6 +57,10 @@ class Brave
         target = params[:target]
     
         target.hp -= damage
+
+        # もしターゲットのHPがマイナスになるなら0を代入
+        target.hp = 0 if target.hp < 0
+
         puts "#{target.name}は#{damage}のダメージを受けた"
       end
     
@@ -115,6 +119,10 @@ class Monster
         target = params[:target]
   
         target.hp -= damage
+
+        # もしターゲットのHPがマイナスになるなら0を代入
+        target.hp = 0 if target.hp < 0
+
         puts "#{target.name}は#{damage}のダメージを受けた"
       end
   
@@ -140,8 +148,19 @@ end
 brave = Brave.new(name: "テリー", hp: 500, offense: 150, defense: 100)
 monster = Monster.new(name: "スライム", hp: 250, offense: 200, defense: 100)
 
-# ループ処理
 loop do
     brave.attack(monster)
+  
+    # モンスターのHPが0以下になったら無限ループを終了させる
+    if monster.hp <= 0
+      break
+    end
+  
     monster.attack(brave)
+  
+    # 勇者のHPが0以下になったら無限ループを終了させる
+    if brave.hp <= 0
+      break
+    end
+  
 end
