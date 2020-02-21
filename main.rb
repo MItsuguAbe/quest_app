@@ -1,14 +1,4 @@
-class Character
-  attr_accessor :name, :hp, :offense, :defense
-
-  def initialize(**params)
-    @name = params[:name]
-    @hp = params[:hp]
-    @offense = params[:offense]
-    @defense = params[:defense]
-  end
-end
-
+require './character'
 
 class Brave < Character
     SPECIAL_ATTACK_CONSTANT = 1.5
