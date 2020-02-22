@@ -25,7 +25,7 @@ class Brave < Character
         attack_num = rand(4)
         
         if attack_num == 0
-            puts "必殺攻撃"
+            puts "会心の一撃！"
             "special_attack"
         else
             puts "通常攻撃"
