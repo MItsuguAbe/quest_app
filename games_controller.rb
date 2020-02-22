@@ -1,50 +1,57 @@
 class GamesController
-
     EXP_CONSTANT = 2
     GOLD_CONSTANT = 3
   
-    # バトルの処理
     def battle(**params)
-      brave = params[:brave]
-      monster = params[:monster]
+      build_characters(params)
   
       loop do
-        brave.attack(monster)
-        break if buttle_end?(monster)
-        monster.attack(brave)
-        break if buttle_end?(brave)
+        # インスタンス変数に変更
+        @brave.attack(@monster)
+        break if buttle_end? # 引数が必要なくなる
+        # インスタンス変数に変更
+        @monster.attack(@brave)
+        break if buttle_end? # 引数が必要なくなる
       end
   
-      # 勇者の勝敗によってメッセージを変える
-      if battle_result(brave)
-        result=calculate_of_exp_and_gold(monster)
-        puts "#{brave.name}はたたかいに勝った"
+      if battle_result # 引数が必要なくなる
+        result = calculate_of_exp_and_gold # 引数が必要なくなる
+        # インスタンス変数に変更
+        puts "#{@brave.name}はたたかいに勝った"
         puts "#{result[:exp]}の経験値と#{result[:gold]}ゴールドを獲得した"
       else
-        puts "#{brave.name}はたたかいに負けた"
+        # インスタンス変数に変更
+        puts "#{@brave.name}はたたかいに負けた"
         puts "目の前が真っ暗になった"
       end
     end
   
-    # 以下のメソッドはクラス外から呼び出す必要がないのでprivate以下に記述する
     private
   
-      # バトル終了の判定（これ逆にわかりずらいけど）
-      def buttle_end?(character)
-        character.hp <= 0
+      def build_characters(**params)
+        # 勇者クラス、モンスタークラスそれぞれのインスタンスをインスタンス変数に代入
+        @brave = params[:brave]
+        @monster = params[:monster]
       end
   
-      # 勇者の勝利判定
-      def battle_result(brave)
-        brave.hp > 0
+      # 引数が必要なくなる
+      def buttle_end?
+        @brave.hp <= 0 || @monster.hp <= 0
       end
   
-      # 経験値とゴールドの計算
-      def calculate_of_exp_and_gold(monster)
-        exp = (monster.offense + monster.defense) * EXP_CONSTANT
-        gold = (monster.offense + monster.defense) * GOLD_CONSTANT
+      # 引数が必要なくなる
+      def battle_result
+        # インスタンス変数に変更
+        @brave.hp > 0
+      end
+  
+      # 引数が必要なくなる
+      def calculate_of_exp_and_gold
+        exp = (@monster.offense + @monster.defense) * EXP_CONSTANT
+        gold = (@monster.offense + @monster.defense) * GOLD_CONSTANT
         result = {exp: exp, gold: gold}
   
         result
       end
+  
 end
