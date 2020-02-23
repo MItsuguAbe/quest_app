@@ -5,11 +5,7 @@ class Brave < Character
 
     def attack(monster)
 
-      puts <<~EOS
-  
-      #{@name}の攻撃
-  
-      EOS
+      attack_message
     
        # decision_attack_typeメソッドの呼び出し
       attack_type = decision_attack_type
@@ -20,12 +16,8 @@ class Brave < Character
       # ダメージをHPに反映させるcause_damageメソッドの呼び出し
       cause_damage(target: monster, damage: damage)
 
-      puts <<~EOS
-  
-      #{monster.name}の残りHPは#{monster.hp}だ
-      -------------------------------------------------------------------
-  
-      EOS
+      damage_message(target: monster, damage: damage)
+      
     end
     
     
@@ -64,10 +56,6 @@ class Brave < Character
         # もしターゲットのHPがマイナスになるなら0を代入
         target.hp = 0 if target.hp < 0
 
-        puts <<~EOS
-  
-        #{target.name}は#{damage}のダメージを受けた
-        EOS
       end
     
       def calculate_special_attack
