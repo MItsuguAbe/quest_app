@@ -6,10 +6,36 @@ class GamesController
       build_characters(params)
   
       loop do
-        @brave.attack(@monster)
-        break if buttle_end?
-        @monster.attack(@brave)
-        break if buttle_end?
+
+        puts "#{@brave.name}はどうする？"
+        puts '[0]戦う'
+        puts '[1]逃げる'
+      
+        input = gets.to_i
+      
+        if input == 0
+          @brave.attack(@monster)
+          break if buttle_end?
+        elsif input == 1
+          puts "#{@brave.name}は逃げ出した"
+          exit
+        else
+          puts '無効な値です'
+        end
+
+
+        puts "#{@monster.name}の攻撃！"
+        puts "[0]を押してください"
+
+        input = gets.to_i
+      
+        if input == 0
+          @monster.attack(@brave)
+          break if buttle_end?
+        else
+          puts '無効な値です'
+        end
+
       end
   
       battle_judgment

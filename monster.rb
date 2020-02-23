@@ -34,6 +34,7 @@ class Monster < Character
         cause_damage(target: brave, damage: damage)
 
         puts "#{brave.name}の残りHPは#{brave.hp}だ"
+        puts "-------------------------------------------------------------------"
     end
 
     
