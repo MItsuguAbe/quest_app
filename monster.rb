@@ -61,12 +61,9 @@ class Monster < Character
       def transform
         transform_name = "ドラゴン"
 
-        puts <<~EOS
-        #{@name}は怒っている
-        #{@name}は#{transform_name}に変身した
-        EOS
-
-        
+        # transform_messageを呼び出し
+        transform_message(origin_name: @name, transform_name: transform_name)
+      
         @offense *= POWER_UP_RATE
         @name = transform_name
       end
