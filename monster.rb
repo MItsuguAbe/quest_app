@@ -26,7 +26,11 @@ class Monster < Character
             transform
         end
 
-        puts "#{@name}の攻撃"
+        puts <<~EOS
+  
+        #{@name}の攻撃
+    
+        EOS
     
         damage = calculate_damage(brave)
 
@@ -56,7 +60,10 @@ class Monster < Character
         # もしターゲットのHPがマイナスになるなら0を代入
         target.hp = 0 if target.hp < 0
 
-        puts "#{target.name}は#{damage}のダメージを受けた"
+        puts <<~EOS
+        #{target.name}は#{damage}のダメージを受けた
+    
+        EOS
       end
   
 
