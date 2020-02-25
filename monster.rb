@@ -15,7 +15,7 @@ class Monster < Character
         defense: params[:defense]
       )
   
-      # 親クラスで定義していない処理はそのまま残す
+      
       @transform_flag = false
       @trigger_of_transform = params[:hp] * CALC_HALF_HP
     end
@@ -46,7 +46,7 @@ class Monster < Character
 
       # ダメージ反映処理
       def cause_damage(**params)
-        # 引数で受け取った値を変数に格納
+        
         damage = params[:damage]
         target = params[:target]
   
@@ -61,7 +61,6 @@ class Monster < Character
       def transform
         transform_name = "ドラゴン"
 
-        # transform_messageを呼び出し
         transform_message(origin_name: @name, transform_name: transform_name)
       
         @offense *= POWER_UP_RATE

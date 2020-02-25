@@ -7,7 +7,6 @@ class Brave < Character
 
       attack_message
     
-       # decision_attack_typeメソッドの呼び出し
       attack_type = decision_attack_type
 
        # calculate_damageメソッドの呼び出し

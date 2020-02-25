@@ -1,4 +1,3 @@
-# message_dialog.rbの読み込み
 require './message_dialog'
 
 

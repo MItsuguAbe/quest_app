@@ -1,7 +1,6 @@
 require './message_dialog'
 
 class Character
-    # MessageDialogのインクルード
     include MessageDialog
 
     attr_accessor :name, :hp, :offense, :defense
